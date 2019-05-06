@@ -2,19 +2,16 @@ package tw.edu.ntut.sdtlab.crawler.testapp.testrotation;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class RotationDataRemainActivity extends AppCompatActivity {
 
     private TextView textView;
-    private Button changeTextButton, nextPageButton;
+    private Button changeTextButton, goToDataNotRemainActivityButton, goToCrashActivityButton;
 
     private String data;
     private SharedPreferences preference;
@@ -22,14 +19,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_rotation_data_remain);
 
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.speakTextView);
         changeTextButton = (Button) findViewById(R.id.changeTextButton);
-        nextPageButton = (Button) findViewById(R.id.nextPageButton);
+        goToDataNotRemainActivityButton = (Button) findViewById(R.id.goToDataNotRemainActivityButton);
+        goToCrashActivityButton = (Button) findViewById(R.id.goToCrashActivityButton);
 
         preference = getSharedPreferences("preFile", MODE_PRIVATE);
-        data = preference.getString("data", "TextView");
+        data = preference.getString("data", getResources().getString(R.string.default_text));
         textView.setText(data);
 
         changeTextButton.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nextPageButton.setOnClickListener(new View.OnClickListener() {
+        goToDataNotRemainActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToNextPage();
+                goToDataRemainActivity();
+            }
+        });
+
+        goToCrashActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCrashActivity();
             }
         });
 
@@ -57,11 +62,13 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void goToNextPage() {
-        Intent intent = new Intent(this, RotationErrorActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("data", data);
-        intent.putExtras(bundle);
+    private void goToDataRemainActivity() {
+        Intent intent = new Intent(this, RotationDataNotRemainActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToCrashActivity() {
+        Intent intent = new Intent(this, RotationCrashActivity.class);
         startActivity(intent);
     }
 }

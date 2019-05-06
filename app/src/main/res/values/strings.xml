@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestRotation</string>
+    <string name="default_text">say something</string>
 </resources>
