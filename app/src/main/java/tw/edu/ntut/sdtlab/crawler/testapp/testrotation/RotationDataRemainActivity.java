@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class RotationDataRemainActivity extends AppCompatActivity {
 
-    private TextView textView;
-    private Button changeTextButton, goToDataNotRemainActivityButton, goToCrashActivityButton;
+    private EditText editText;
+    private Button goToDataNotRemainActivityButton, goToCrashActivityButton;
 
     private String data;
     private SharedPreferences preference;
@@ -21,22 +22,13 @@ public class RotationDataRemainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotation_data_remain);
 
-        textView = (TextView) findViewById(R.id.speakTextView);
-        changeTextButton = (Button) findViewById(R.id.changeTextButton);
+        editText = (EditText) findViewById(R.id.editText);
         goToDataNotRemainActivityButton = (Button) findViewById(R.id.goToDataNotRemainActivityButton);
         goToCrashActivityButton = (Button) findViewById(R.id.goToCrashActivityButton);
 
         preference = getSharedPreferences("preFile", MODE_PRIVATE);
         data = preference.getString("data", getResources().getString(R.string.default_text));
-        textView.setText(data);
-
-        changeTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                data = "Hello";
-                textView.setText(data);
-            }
-        });
+        editText.setText(data);
 
         goToDataNotRemainActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
